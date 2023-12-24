@@ -1,0 +1,80 @@
+
+<form th:method="POST" th:action="@{/cars/add}">
+    <input id="id" type="hidden" name="id" th:value="(${car} != null ? ${car?.getId()} : '')">
+    <div class="form-group">
+        <label for="model">Car Model</label>
+        <input type="text"
+               class="form-control"
+               id="model"
+               name="model"
+               th:value="(${car} != null ? ${car.getModel()} : '')"
+               required
+               placeholder="Enter car model">
+    </div>
+    <div class="form-group">
+        <label for="model">License Plate</label>
+        <input type="text"
+               class="form-control"
+               id="licensePlate"
+               name="licensePlate"
+               th:value="(${car} != null ? ${car.getLicensePlate()} : '')"
+               required
+               placeholder="Enter car license plate">
+    </div>
+    <div class="form-group">
+        <label for="model">Car Color</label>
+        <input type="text"
+               class="form-control"
+               id="color"
+               name="color"
+               th:value="(${car} != null ? ${car.getColor()} : '')"
+               required
+               placeholder="Enter car color">
+    </div>
+    <div class="form-group">
+        <label for="model">Car Year</label>
+        <input type="text"
+               class="form-control"
+               id="year"
+               name="year"
+               th:value="(${car} != null ? ${car.getYear()} : '')"
+               required
+               placeholder="Enter car year">
+    </div>
+    <div class="form-group">
+        <label for="model">Car capacity</label>
+        <input type="text"
+               class="form-control"
+               id="capacity"
+               name="capacity"
+               th:value="(${car} != null ? ${car.getCapacity()} : '')"
+               required
+               placeholder="Enter car capacity">
+    </div>
+
+    <div class="form-group">
+        <label for="model">Car baggage</label>
+        <input type="text"
+               class="form-control"
+               id="bag"
+               name="bag"
+               th:value="(${car} != null ? ${car.getBag()} : '')"
+               required
+               placeholder="Enter car baggage">
+    </div>
+
+    <div class="form-group">
+        <label for="model">Car pricePerKM</label>
+        <input type="number"
+               class="form-control"
+               id="pricePerKm"
+               name="pricePerKm"
+               th:value="(${car} != null ? ${car.getPricePerKm()} : '')"
+               required
+               placeholder="Enter car price per KM">
+    </div>
+
+
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    <a type="button" class="btn btn-primary" href="/cars">Back</a>
+</form>

@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #3498DB;
+    color: #fff;
+}
+
+/* Delete Button Styles */
+.delete {
+    background-color: #E74C3C;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete:hover {
+    background-color: #C0392B;
+}
+
+/* Edit Link Styles */
+.edit {
+    color: #3498DB;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.edit:hover {
+    text-decoration: underline;
+}

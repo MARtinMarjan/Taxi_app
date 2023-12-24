@@ -1,0 +1,15 @@
+<header xmlns:th="http://www.thymeleaf.org">
+    <div class="header-container">
+        <h1>Taxi App</h1>
+        <nav>
+            <a class="nav-item" sec:authorize="isAuthenticated()">
+                <th:block th:if="${#request.getRemoteUser() != null}"
+                          th:text="${#request.getRemoteUser()}"></th:block>
+            </a>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/drivers}">Drivers</a>
+            <a th:href="@{/cars}">Cars</a>
+
+        </nav>
+    </div>
+</header>
