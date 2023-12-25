@@ -10,6 +10,15 @@
             <a th:href="@{/drivers}">Drivers</a>
             <a th:href="@{/cars}">Cars</a>
 
+            <a class="nav-item" sec:authorize="isAuthenticated()"
+               href="/logout">
+                <i class="fa fa-shopping-cart"></i> Logout
+            </a>
+
+            <a class="nav-item" sec:authorize="!isAuthenticated()"
+               href="/login">
+                <i class="fa fa-shopping-cart"></i> Login
+            </a>
         </nav>
     </div>
 </header>
