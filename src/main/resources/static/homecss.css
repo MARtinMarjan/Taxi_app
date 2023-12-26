@@ -1,0 +1,77 @@
+.home{
+    max-width: 90%;
+    margin: auto;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items:center;
+}
+.background-img{
+    max-width: 50%;
+    margin: auto;
+    width: 50%;
+    min-height: 500px;
+    display: flex;
+    align-items:center;
+    background-size: contain;
+    background: url("background.png") no-repeat center left;
+}
+.home-text {
+    padding-left: 130px;
+}
+.home-text h1{
+    font-size: 2.4rem;
+}
+.home-text p{
+    font-size: 0.93rem;
+    font-weight: 300;
+    margin: 0.5rem 0 1.2rem;
+}
+.btn{
+    padding: 10px 22px;
+    background: var(--main-color);
+    color: var(--bg-color);
+    font-weight: 400;
+}
+.btn:hover{
+    background: #fd052f;
+}
+/* Style for the horizontal line */
+.section-divider {
+    max-width: 90%;
+    /*width: 100%;*/
+    border-top: 2px solid #333; /* Adjust the color as needed */
+    margin-right: 100px;
+    margin-left: 100px;
+    /*margin: 20px 20px; !* Adjust the margin as needed *!*/
+    position: relative;
+}
+
+/* Style for the text label */
+.section-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff; /* Adjust the background color as needed */
+    padding: 0 10px; /* Adjust the padding as needed */
+    font-size: 1.2rem;
+}
+
+/* Styles for the cards */
+.card-container {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.card {
+    width: 300px;
+    margin: 20px 10px; /* Adjust the margin as needed */
+    padding: 20px;
+    background-color: #f4f4f4; /* Light grey color */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}

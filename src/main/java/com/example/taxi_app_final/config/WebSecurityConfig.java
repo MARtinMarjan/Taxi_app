@@ -3,6 +3,7 @@ package com.example.taxi_app_final.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home","/**/*.css", "/cars", "/drivers","/register").permitAll()
+                .antMatchers("/", "/home","/**/*.css","/**/*.png", "/cars", "/drivers","/register").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
@@ -44,6 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/access_denied");
 
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**","/static/**");
     }
 
     @Override

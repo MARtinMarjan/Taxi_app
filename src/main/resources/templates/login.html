@@ -1,13 +1,18 @@
-<link rel="stylesheet" th:href="@{login.css}"/>
-<form action="/login" method="post">
-    <h2>User Login</h2>
+<link rel="stylesheet" th:href="@{logincss.css}"/>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+<div class="login-container">
+    <form class="login-form" action="/login" method="post">
+        <h2>User Login</h2>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+        <label for="username">Username:</label>
+        <input class="login-input" type="text" id="username" name="username" required>
 
-    <button type="submit">Login</button>
-</form>
+        <label for="password">Password:</label>
+        <input class="login-input" type="password" id="password" name="password" required>
+
+        <button class="login-button" type="submit">Login</button>
+    </form>
+
+    <p class="register-message">Don't have an account? <a th:href="@{/register}">Register now!</a></p>
+</div>
 

@@ -32,7 +32,8 @@ public class BookingController {
     public String listBookings(Model model) {
         List<Booking> bookings = bookingService.getAllBookings();
         model.addAttribute("bookings", bookings);
-        return "bookings";
+        model.addAttribute("bodyContent", "bookinghtml");
+        return "master-template";
     }
 
     @GetMapping("/form")

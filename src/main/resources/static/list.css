@@ -1,40 +1,15 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
+h2{
     margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #3498DB;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #bf0224; /* Use your main color */
     color: #fff;
+    padding: 30px 20px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-/* Delete Button Styles */
-.delete {
-    background-color: #E74C3C;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.delete:hover {
-    background-color: #C0392B;
-}
-
-/* Edit Link Styles */
-.edit {
-    color: #3498DB;
-    text-decoration: none;
-    margin-left: 10px;
-}
-
-.edit:hover {
-    text-decoration: underline;
+.car{
+    background-color: #333;
+    color: white;
+    padding: 5px;
 }

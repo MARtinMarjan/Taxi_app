@@ -1,3 +1,6 @@
+<link rel="stylesheet" th:href="@{/addcar.css}" type="text/css"/>
+
+<h2>Add a New Driver</h2>
 
 <form th:method="POST" th:action="@{/drivers/add}">
     <input id="id" type="hidden" name="id" th:value="(${driver} != null ? ${driver?.getId()} : '')">
@@ -11,15 +14,15 @@
                required
                placeholder="Enter driver's full name">
     </div>
-    <<div class="form-group">
-    <label for="car">Car</label>
-    <select class="form-control" id="car" name="car.id">
-        <!-- Iterate over cars and populate the dropdown -->
-        <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.model}"></option>
-    </select>
-</div>
+    <div class="form-group">
+        <label for="car">Car</label>
+        <select class="form-control" id="car" name="car.id">
+            <!-- Iterate over cars and populate the dropdown -->
+            <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.model}"></option>
+        </select>
+    </div>
 
-    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-    <a type="button" class="btn btn-primary" href="/drivers">Back</a>
+    <button id="submit" type="submit" class="btn-custom btn-primary">Submit</button>
+    <a type="button" class="btn-custom btn-secondary" href="/drivers">Back</a>
 </form>
 

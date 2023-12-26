@@ -1,0 +1,78 @@
+form {
+    max-height: 1200px;
+    max-width: 400px;
+    margin: 50px auto 50px;
+}
+
+/* Style the form groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Style labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+h2{
+    margin-top: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #bf0224; /* Use your main color */
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style text inputs */
+.form-control {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Style number input */
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/* Style buttons */
+.btn-custom {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--main-color);
+    color: #fff;
+    border: 1px solid var(--main-color);
+}
+
+.btn-primary:hover {
+    background-color: #fd052f;
+    border: 1px solid #fd052f;
+}
+
+/* Style the Back button to match the Submit button */
+.btn-secondary {
+    background-color: #c4c2c2;
+    color: #fff;
+    border: 1px solid #c4c2c2;
+}
+
+.btn-secondary:hover {
+    background-color: #d9d7d7;
+    border: 1px solid #d9d7d7;
+}

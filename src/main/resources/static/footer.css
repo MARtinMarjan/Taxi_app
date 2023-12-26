@@ -1,105 +1,49 @@
 footer {
-    box-sizing: border-box;
+    background-color: #333;
+    color: #fff;
+    border-top: 2px solid var(--main-color);
+    padding-top: 20px;
     margin: 0;
-    padding: 0;
-    color: #fff;
-    background: #121315;
 }
-
-.footer ul {
-    list-style: none;
-}
-
-.footer p {
-    color: #fff;
-    max-width: 25em;
-    font-size: 0.9em;
-    line-height: 23px;
-}
-
-.footer a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.footer .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2em;
+.footer-container{
     display: flex;
     justify-content: space-between;
-    gap: 2em;
+    gap:1rem;
 }
-
-.brand {
-    display: block;
-    font-size: 1.8em;
-    font-weight: 600;
-    margin-bottom: 1em;
+.footer-container .logo{
+    color: var(--bg-color);
+    margin-bottom: 1rem;
 }
-
-.media-icons a,
-.services-icons a {
-    font-size: 1.6em;
+.footer-container .footer-box{
+    display: flex;
+    flex-direction: column;
 }
-
-.media-icons a:hover,
-.services-icons a:hover {
-    color: #94fbab;
+.social{
+    display: flex;
+    align-items: center;
 }
-
-.footer-bottom {
+.social a{
+    font-size:24px;
+    color: var(--bg-color);
+    margin-right: 1rem;
+}
+.social a:hover{
+    color: var(--main-color);
+}
+.footer-box h3{
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+.footer-box a{
+    color: #818181;
+    margin-bottom: 10px;
+}
+.footer-box a:hover{
+    color: var(--bg-color);
+}
+.footer-bottom{
+    margin-top:10px;
     display: flex;
     justify-content: center;
-    border-top: 1px solid rgba(138, 208, 153, 0.36);
-    padding: 2em;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-.footer-bottom:hover {
-    opacity: 1;
-}
-
-.footer .menu a {
-    transition: 0.3s;
-    font-weight: 600;
-}
-
-.footer .menu a:hover {
-    color: #94fbab;
-}
-
-.input-wrap input {
-    padding: 0.5em;
-    border: none;
-    background: #20232a;
-    color: #ccc;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-.input-wrap input:focus {
-    outline: none;
-    background: #272a30;
-    color: #fff;
-}
-
-.input-wrap button {
-    padding: 0.8em;
-    background: #94fbab;
-    border: none;
-    color: #217634;
-    transition: 0.3s;
-}
-
-.input-wrap button:hover {
-    background: #fff;
-    color: #111;
-}
-
-/* Responsive Styles */
-@media screen and (max-width: 900px) {
-    .footer .container {
-        flex-direction: column;
-    }
 }

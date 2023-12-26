@@ -1,51 +1,33 @@
-<link rel="stylesheet" th:href="@{home.css}"/>
-<section>
-    <h2>Welcome to our Taxi Service</h2>
-    <p>Fast and reliable transportation at your fingertips. Book a taxi now!</p>
-
-    <button onclick="openBookingForm()">Book a Taxi</button>
+<link rel="stylesheet" th:href="@{homecss.css}" type="text/css"/>
+<section class="home" id="home">
+    <div class="home-text">
+        <h1>Exceptional Service <br> On Every Drive With Us</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur <br> adipisicing elit. A atque autem.
+        </p>
+        <a href="/booking" class="btn">Book Now</a>
+    </div>
+    <div class="background-img"></div>
 </section>
 
-<form th:action="@{/booking/form}" method="post">
-    <label for="tripType">Trip Type:</label>
-    <select id="tripType" name="tripType">
-        <option value="oneWay">One Way</option>
-        <option value="roundTrip">Round Trip</option>
-    </select>
-
-
-    <label for="pickupLocation">From Pickup Location:</label>
-    <input type="text" id="pickupLocation" name="pickupLocation" required>
-
-    <label for="dropOffLocation">To Pickup Location:</label>
-    <input type="text" id="dropOffLocation" name="dropOffLocation" required>
-
-    <label for="pickupDateTime">Pickup Date and Time:</label>
-    <input type="datetime-local" id="pickupDateTime" name="pickupDateTime" required>
-
-    <label for="passengers">Number of Passengers:</label>
-    <input type="number" id="passengers" name="passengers" min="1" required>
-
-    <!-- Additional fields for round trips -->
-    <div id="roundTripFields" style="display: none;">
-        <label for="returnDateTime">Return Date and Time:</label>
-        <input type="datetime-local" id="returnDateTime" name="returnDateTime" required>
+<section class="services">
+    <div class="section-divider">
+        <div class="section-label">Our Services</div>
     </div>
+    <div class="card-container">
+        <div class="card">
+            <h2>Door-to-Door Transfer</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
 
-    <script>
-        // Show/hide return date and time fields based on trip type selection
-        const tripTypeSelect = document.getElementById("tripType");
-        const roundTripFields = document.getElementById("roundTripFields");
+        <div class="card">
+            <h2>Professional Drivers</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
 
-        tripTypeSelect.addEventListener("change", function () {
-            if (tripTypeSelect.value === "roundTrip") {
-                roundTripFields.style.display = "block";
-            } else {
-                roundTripFields.style.display = "none";
-            }
-        });
-    </script>
-
-    <button type="submit">Book Taxi</button>
-
-</form>
+        <div class="card">
+            <h2>Meet and Greet On Time</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+</section>

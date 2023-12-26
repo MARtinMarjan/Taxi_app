@@ -1,0 +1,80 @@
+/* Apply styles to the entire form container */
+.container-register {
+    max-width: 400px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #EBEBEB; /* Set your desired background color */
+    margin: 50px auto auto;
+}
+
+/* Style the form heading */
+.form-signin-heading {
+    text-align: center;
+    color: var(--main-color); /* Match the color of your header */
+    margin-bottom: 20px;
+}
+
+/* Style labels */
+label {
+    color: var(--text-color);
+}
+.form-check-label{
+    color: var(--text-color);
+}
+/* Style form inputs */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+}
+
+.form-check input[type="radio"] {
+    accent-color: red;
+}
+
+/* Style radio buttons */
+.form-check {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.register-message {
+    text-align: center;
+    margin-top: 10px;
+    color: #333; /* Set your desired text color */
+}
+
+.register-message a {
+    color: var(--main-color); /* Match the color of your header */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-message a:hover {
+    text-decoration: underline;
+}
+/* Style buttons */
+.register-button {
+    display: block;
+    padding: 10px 10px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0 auto;
+    cursor: pointer;
+    background-color: var(--main-color); /* Match the color of your header */
+    color: #fff;
+    border: 1px solid var(--main-color); /* Match the color of your header */
+}
+
+.register-button:hover {
+    background-color: #fd052f; /* Set your desired button hover color */
+    border: 1px solid #fd052f;
+}

@@ -1,0 +1,59 @@
+<link rel="stylesheet" th:href="@{/bookingcss.css}" type="text/css"/>
+
+<section class="booking-section">
+    <h2>Welcome to our Taxi Service</h2>
+    <p>Fast and reliable transportation at your fingertips. Book a taxi now!</p>
+</section>
+
+<form method="post" class="booking-form">
+
+    <label for="tripType">Trip Type:</label>
+    <select id="tripType" name="tripType">
+        <option value="oneWay">One Way</option>
+        <option value="roundTrip">Round Trip</option>
+    </select>
+    <div class="form-columns">
+
+
+        <label for="pickupLocation">From Pickup Location:</label>
+        <input type="text" class="booking-input" id="pickupLocation" name="pickupLocation" required>
+
+        <label for="dropOffLocation">To Pickup Location:</label>
+        <input type="text" class="booking-input" id="dropOffLocation" name="dropOffLocation" required>
+
+        <label for="pickupDateTime">Pickup Date and Time:</label>
+        <input class="booking-input"  type="datetime-local" id="pickupDateTime" name="pickupDateTime" required>
+
+        <label for="passengers">Number of Passengers:</label>
+        <input type="number"  class="booking-input" id="passengers" name="passengers" min="1" required>
+    </div>
+    <!-- Additional fields for round trips -->
+    <div class="form-columns">
+        <div id="roundTripFields" style="display: none;">
+            <label for="returnDateTime">Return Date and Time:</label>
+            <input type="datetime-local" class="booking-input" id="returnDateTime" name="returnDateTime" required>
+        </div>
+        <div>
+            <br>
+            <button type="submit" class="booking-button" style="display: inline-block">Book Taxi</button>
+
+        </div>
+    </div>
+    <script>
+        // Show/hide return date and time fields based on trip type selection
+        const tripTypeSelect = document.getElementById("tripType");
+        const roundTripFields = document.getElementById("roundTripFields");
+
+        tripTypeSelect.addEventListener("change", function () {
+            if (tripTypeSelect.value === "roundTrip") {
+                roundTripFields.style.display = "block";
+            } else {
+                roundTripFields.style.display = "none";
+            }
+        });
+    </script>
+
+
+
+
+</form>

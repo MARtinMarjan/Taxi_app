@@ -1,0 +1,75 @@
+/* Apply styles to the entire form */
+.login-container{
+    margin-top: 120px;
+    margin-bottom: 100px;
+}
+.login-form {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #EBEBEB; /* Set your desired background color */
+}
+
+/* Style labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--main-color); /* Match the color of your header */
+}
+
+/* Style text inputs */
+.login-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Style buttons */
+.login-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--main-color); /* Match the color of your header */
+    color: #fff;
+    border: 1px solid var(--main-color); /* Match the color of your header */
+}
+
+button:hover {
+    background-color: #fd052f; /* Set your desired button hover color */
+    border: 1px solid #fd052f;
+}
+
+/* Style the heading */
+h2 {
+    text-align: center;
+    color: var(--text-color); /* Set your desired text color */
+    margin-bottom: 20px;
+}
+
+/* Additional styles for the registration message */
+.register-message {
+    text-align: center;
+    margin-top: 10px;
+    color: #333; /* Set your desired text color */
+}
+
+.register-message a {
+    color: var(--main-color); /* Match the color of your header */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-message a:hover {
+    text-decoration: underline;
+}

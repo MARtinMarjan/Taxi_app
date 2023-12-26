@@ -43,7 +43,7 @@ public class CarController {
         if (this.carService.findById(id).isPresent()) {
             Car car = this.carService.findById(id).get();
             model.addAttribute("car", car);
-            model.addAttribute("bodyContent","add_car");
+            model.addAttribute("bodyContent","addcar");
             return "master-template";
         }
     return "redirect:/car?error=CarNotFound";
@@ -53,7 +53,7 @@ public class CarController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addCarPage(Model model) {
         model.addAttribute("cars", carService.findAll());
-        model.addAttribute("bodyContent","add_car");
+        model.addAttribute("bodyContent","addcar");
         return "master-template";
     }
 

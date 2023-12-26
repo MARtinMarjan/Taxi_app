@@ -1,4 +1,5 @@
-
+<link rel="stylesheet" th:href="@{/addcar.css}" type="text/css"/>
+<h2>Add a new car</h2>
 <form th:method="POST" th:action="@{/cars/add}">
     <input id="id" type="hidden" name="id" th:value="(${car} != null ? ${car?.getId()} : '')">
     <div class="form-group">
@@ -75,6 +76,6 @@
     </div>
 
 
-    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-    <a type="button" class="btn btn-primary" href="/cars">Back</a>
+    <button id="submit" type="submit" class="btn-custom btn-primary">Submit</button>
+    <a type="button" class="btn-custom btn-secondary" href="/cars">Back</a>
 </form>

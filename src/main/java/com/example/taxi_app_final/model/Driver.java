@@ -14,7 +14,7 @@ public class Driver {
 
     private String fullName;
 
-    private int rating;
+//    private int rating;
 
     @OneToOne
     private Car car;

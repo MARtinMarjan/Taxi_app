@@ -1,42 +1,97 @@
-<link rel="stylesheet" th:href="@{list.css}"/>
-<h2>Car List</h2>
+<link rel="stylesheet" th:href="@{list.css}" xmlns:sec="http://www.w3.org/1999/xhtml"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<div class="col mb-3">
-    <div class="row">
-        <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
-            <a href="/cars/add-car" class="btn btn-block btn-dark add-product-btn">
-                Add new product
-            </a>
+<h2 class="mt-4">Car List</h2>
+
+<div class="container">
+
+    <section class="cars container row" th:each="car : ${cars}">
+        <div class="col-12">
+            <div class="mb-3">
+                <h3 class="car mt-0 p-2" th:text="${car.model}"></h3>
+                <div class="row p-2">
+                    <div class="col-12 col-md-3">
+                        <img src="https://www.seaisland.com/content/uploads/2022/01/placeholder-image.png" class="w-100 mr-2" alt="Placeholder">
+                        <!--                        <img th:src="${car.image}" class="w-100" th:id="${'carImage_' + car.id}">-->
+                    </div>
+                    <div class="col-12 col-md-9 pl-2">
+                        <div class="row justify-right">
+                            <div class="row col-12 col-md-5 mb-2 mb-md-0">
+                                <div class="col-6 mb-2">Year:</div>
+                                <div class="col-6 font-weight-bold" th:text="${car.year}"></div>
+                                <div class="col-6 mb-2">Color:</div>
+                                <div class="col-6 font-weight-bold" th:text="${car.color}"></div>
+                                <div class="col-6 mb-2">License Place:</div>
+                                <div class="col-6 font-weight-bold" th:text="${car.licensePlate}"></div>
+
+                            </div>
+                            <div class="col-12 col-md-5 mb-2 mb-md-0">
+                                <div class="row align-items-center mb-3">
+                                    <div class="col-6 mb-2">Max Passengers:</div>
+                                    <div class="col-6 font-weight-bold" th:text="${car.capacity}"></div>
+                                    <div class="col-6 mb-2">Bags:</div>
+                                    <div class="col-6 font-weight-bold" th:text="${car.bag}"></div>
+                                    <div class="col-6">Price/km:</div>
+                                    <div class="col-6 font-weight-bold text-green" th:text="${car.pricePerKm + ' $'}"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2 mb-2 mb-md-0">
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <form class="delete" method="POST" th:action="@{'cars/delete/{id}' (id=${car.getId()})}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                    <br>
+                                    <a th:href="@{'/cars/edit-form/{id}' (id=${car.getId()})}" class="btn btn-dark">Edit</a>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!--    <table border="1">-->
+    <!--        <thead>-->
+    <!--        <tr>-->
+    <!--            <th>Model</th>-->
+    <!--            <th>Year</th>-->
+    <!--            <th>Passenger Capacity</th>-->
+    <!--            <th>Bag Capacity</th>-->
+    <!--            <th>Price per Km</th>-->
+    <!--            <th></th>-->
+    <!--        </tr>-->
+    <!--        </thead>-->
+    <!--        <tbody>-->
+    <!--        <tr th:each="car : ${cars}">-->
+    <!--            <td th:text="${car.model}"></td>-->
+    <!--            <td th:text="${car.year}"></td>-->
+    <!--            <td th:text="${car.getCapacity()}"></td>-->
+    <!--            <td th:text="${car.bag}"></td>-->
+    <!--            <td th:text="${car.pricePerKm}"></td>-->
+    <!--            <td class="text-right">-->
+    <!--                <th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
+    <!--                    <form class="delete" method="POST" th:action="@{'cars/delete/{id}' (id=${car.getId()})}">-->
+    <!--                        <button type="submit" class="delete">Delete</button>-->
+    <!--                    </form>-->
+    <!--                    <a th:href="@{'/cars/edit-form/{id}' (id=${car.getId()})}" class="edit">Edit</a>-->
+    <!--                </th:block>-->
+    <!--            </td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--    </table>-->
+
+    <div class="col mb-3">
+        <div class="row">
+            <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/cars/add-car}" class="btn btn-block btn-dark add-product-btn">
+                    Add new car
+                </a>
+            </div>
         </div>
     </div>
 </div>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>Model</th>
-        <th>Year</th>
-        <th>Passenger Capacity</th>
-        <th>Bag Capacity</th>
-        <th>Price per Km</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="car : ${cars}">
-        <td th:text="${car.model}"></td>
-        <td th:text="${car.year}"></td>
-        <td th:text="${car.getCapacity()}"></td>
-        <td th:text="${car.bag}"></td>
-        <td th:text="${car.pricePerKm}"></td>
-        <td class="text-right">
-            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                <form class="delete" method="POST" th:action="@{'cars/delete/{id}' (id=${car.getId()})}">
-                    <button type="submit" class="delete">Delete</button>
-                </form>
-                <a th:href="@{'/cars/edit-form/{id}' (id=${car.getId()})}" class="edit">Edit</a>
-            </th:block>
-        </td>
-    </tr>
-    </tbody>
-</table>
 
