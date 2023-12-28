@@ -13,3 +13,42 @@ h2{
     color: white;
     padding: 5px;
 }
+.custom{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #EBEBEB; /* Set your desired background color */
+    height: fit-content;
+}
+.price-label {
+     font-size: 1.5em; /* Adjust the font size as needed */
+     color: #549c63; /* Change the color as needed */
+}
+
+.calculated-price {
+    color: #549c63;
+    font-weight: bold;
+    font-size: 1.4em; /* Adjust the font size as needed */
+    padding: 5px; /* Add padding for better visual appearance */
+    display: inline-block; /* Ensures that the background color only covers the content */
+}
+.booking-button {
+    display: block;
+    padding: 10px 10px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    /*margin: 0 auto 0 230px;*/
+    cursor: pointer;
+    width: 100%; /* Make the button fill the width of its container */
+    background-color: var(--main-color); /* Match the color of your header */
+    color: #fff;
+    border: 1px solid var(--main-color); /* Match the color of your header */
+}
+
+.booking-button:hover {
+    background-color: #fd052f; /* Set your desired button hover color */
+    border: 1px solid #fd052f;
+}
+

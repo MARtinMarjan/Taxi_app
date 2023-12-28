@@ -22,8 +22,12 @@ public class UserServiceImpl implements UserSerivce {
         this.passwordEncoder = passwordEncoder;
     }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+//        return userRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException(s));
+//    }
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public User loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException(s));
     }
 

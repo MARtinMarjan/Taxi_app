@@ -19,10 +19,14 @@ public class Driver {
     @OneToOne
     private Car car;
 
+    @Enumerated(EnumType.STRING)
+    private DriverStatus status;
+
     public Driver(){}
     public Driver(String fullName, Car car) {
         this.fullName = fullName;
         this.car = car;
+        this.status = DriverStatus.AVAILABLE;
     }
 
 }

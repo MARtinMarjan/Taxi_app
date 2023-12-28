@@ -20,8 +20,8 @@ public class Car {
     private int bag;
     private Long pricePerKm;
 
-    @OneToOne
-    private Driver driver;
+//    @OneToOne
+//    private Driver driver;
 
     public Car(){}
 

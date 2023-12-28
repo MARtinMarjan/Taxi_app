@@ -2,6 +2,7 @@ package com.example.taxi_app_final.service.impl;
 
 import com.example.taxi_app_final.model.Car;
 import com.example.taxi_app_final.model.Driver;
+import com.example.taxi_app_final.model.DriverStatus;
 import com.example.taxi_app_final.model.exceptions.DriverNotFoundException;
 import com.example.taxi_app_final.repository.DriverRepository;
 import com.example.taxi_app_final.service.DriverService;
@@ -50,5 +51,15 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public void deleteById(Long id) {
         this.driverRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Driver> findDriverByStatus() {
+        return driverRepository.findAllByStatus(DriverStatus.AVAILABLE);
+    }
+
+    @Override
+    public List<Car> findCarsForPassengers(int capacity) {
+        return driverRepository.findAvailableCarsByCapacity(capacity, DriverStatus.AVAILABLE);
     }
 }

@@ -1,25 +1,36 @@
 <link rel="stylesheet" th:href="@{/bookingcss.css}" type="text/css"/>
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
 <section class="booking-section">
     <h2>Welcome to our Taxi Service</h2>
     <p>Fast and reliable transportation at your fingertips. Book a taxi now!</p>
 </section>
 
-<form method="post" class="booking-form">
+<form th:method="POST" th:action="@{/booking/add}" class="booking-form">
 
     <label for="tripType">Trip Type:</label>
     <select id="tripType" name="tripType">
-        <option value="oneWay">One Way</option>
-        <option value="roundTrip">Round Trip</option>
+        <option th:value="oneWay">One Way</option>
+        <option th:value="roundTrip">Round Trip</option>
     </select>
     <div class="form-columns">
 
-
         <label for="pickupLocation">From Pickup Location:</label>
-        <input type="text" class="booking-input" id="pickupLocation" name="pickupLocation" required>
+        <select id="pickupLocation" name="pickupLocation" >
+            <option th:value="${booking.pickupLocation}" th:each="booking : ${bookingsDto}" th:text="${booking.pickupLocation}"></option>
+        </select>
 
-        <label for="dropOffLocation">To Pickup Location:</label>
-        <input type="text" class="booking-input" id="dropOffLocation" name="dropOffLocation" required>
+        <label for="dropOffLocation">From Pickup Location:</label>
+        <select id="dropOffLocation" name="dropOffLocation" >
+            <option th:value="${booking.dropOffLocation}" th:each="booking : ${bookingsDto}" th:text="${booking.dropOffLocation}"></option>
+        </select>
+
+<!--        <label for="pickupLocation">From Pickup Location:</label>-->
+<!--        <input type="text" class="booking-input" id="pickupLocation" name="pickupLocation" required>-->
+
+<!--        <label for="dropOffLocation">To Pickup Location:</label>-->
+<!--        <input type="text" class="booking-input" id="dropOffLocation" name="dropOffLocation" required>-->
 
         <label for="pickupDateTime">Pickup Date and Time:</label>
         <input class="booking-input"  type="datetime-local" id="pickupDateTime" name="pickupDateTime" required>
@@ -31,7 +42,7 @@
     <div class="form-columns">
         <div id="roundTripFields" style="display: none;">
             <label for="returnDateTime">Return Date and Time:</label>
-            <input type="datetime-local" class="booking-input" id="returnDateTime" name="returnDateTime" required>
+            <input type="datetime-local" class="booking-input" id="returnDateTime" name="returnDateTime">
         </div>
         <div>
             <br>
@@ -43,17 +54,55 @@
         // Show/hide return date and time fields based on trip type selection
         const tripTypeSelect = document.getElementById("tripType");
         const roundTripFields = document.getElementById("roundTripFields");
+        const returnDateTimeInput = document.getElementById("returnDateTime");
 
         tripTypeSelect.addEventListener("change", function () {
             if (tripTypeSelect.value === "roundTrip") {
                 roundTripFields.style.display = "block";
+                returnDateTimeInput.required = true;
+
             } else {
                 roundTripFields.style.display = "none";
+                returnDateTimeInput.required = false;
+
             }
         });
     </script>
-
-
-
-
 </form>
+
+<div class="container mt-5">
+        <div class="row mb-2">
+                    <!-- Table to display bookings -->
+                    <table class="table">
+                        <thead>
+                        <tr th:each="booking : ${bookings}">
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Passengers</th>
+                            <th>Date</th>
+                            <th>Pick-Up Time</th>
+                            <th>Status</th>
+                            <th th:if="${booking.returnDateTime != null}">Return Date</th>
+                            <th th:if="${booking.returnDateTime != null}">Return Time</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="booking : ${bookings}" th:if="${booking.user.username == currentUser}">
+                            <td th:text="${booking.pickupLocation}"></td>
+                            <td th:text="${booking.dropOffLocation}"></td>
+                            <td th:text="${booking.passengers}"></td>
+                            <td th:text="${#temporals.format(booking.pickupDateTime, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#temporals.format(booking.pickupDateTime, 'HH:mm')}"></td>
+                            <td th:text="${booking.status}"></td>
+                            <td th:if="${booking.returnDateTime != null}" th:text="${#temporals.format(booking.returnDateTime, 'yyyy-MM-dd')}"></td>
+                            <td th:if="${booking.returnDateTime != null}" th:text="${#temporals.format(booking.returnDateTime, 'HH:mm')}"></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+<!--</div>-->
+</div>

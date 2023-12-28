@@ -34,6 +34,7 @@ public class Booking {
         this.passengers = passengers;
         this.returnDateTime = returnDateTime;
         this.user = user;
+        this.status = BookingStatus.REQUESTED;
     }
     public Booking(){}
 

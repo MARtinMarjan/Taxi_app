@@ -24,4 +24,9 @@ public interface DriverService {
 
     void deleteById(Long id);
 
+    List<Driver> findDriverByStatus();
+
+    List<Car> findCarsForPassengers(int capacity);
+
+
 }

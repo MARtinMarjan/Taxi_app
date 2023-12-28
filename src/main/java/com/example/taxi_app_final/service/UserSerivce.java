@@ -10,6 +10,9 @@ public interface UserSerivce {
 
     User register(String username, String password, String repeatPassword, String name, String surname, Role role);
 
-    UserDetails loadUserByUsername(String s);
+//    UserDetails loadUserByUsername(String s);
+
+    User loadUserByUsername(String s);
+
 
 }

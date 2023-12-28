@@ -2,10 +2,12 @@ package com.example.taxi_app_final.service.impl;
 
 import com.example.taxi_app_final.model.Car;
 import com.example.taxi_app_final.model.Driver;
+import com.example.taxi_app_final.model.DriverStatus;
 import com.example.taxi_app_final.model.exceptions.CarNotFoundException;
 import com.example.taxi_app_final.repository.CarRepository;
 import com.example.taxi_app_final.repository.DriverRepository;
 import com.example.taxi_app_final.service.CarService;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,4 +71,5 @@ public class CarServiceImpl implements CarService {
     public void deleteById(Long id) {
         this.carRepository.deleteById(id);
     }
+
 }

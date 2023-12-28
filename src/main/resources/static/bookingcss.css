@@ -67,3 +67,39 @@ select {
     background-color: #fd052f; /* Set your desired button hover color */
     border: 1px solid #fd052f;
 }
+
+.container {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Optional: Add styles for responsive design */
+@media screen and (max-width: 600px) {
+    th, td {
+        display: block;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: center;
+    }
+}
