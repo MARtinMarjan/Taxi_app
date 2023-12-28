@@ -6,6 +6,7 @@ import com.example.taxi_app_final.model.User;
 import com.example.taxi_app_final.repository.BookingRepository;
 import com.example.taxi_app_final.service.BookingService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,9 +36,15 @@ public class BookingServiceImpl implements BookingService {
         return Optional.of(this.bookingRepository.save(new Booking(tripType,pickupLocation,dropOffLocation,pickupDateTime,passengers,returnDateTime,user)));
     }
 
+    @Transactional
     @Override
     public void deleteBooking(Long id) {
         this.bookingRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Booking> findBookingsByUser(User user) {
+        return bookingRepository.findAllByUser(user);
     }
 }
 

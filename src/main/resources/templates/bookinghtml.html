@@ -1,4 +1,4 @@
-<link rel="stylesheet" th:href="@{/bookingcss.css}" type="text/css"/>
+<link rel="stylesheet" th:href="@{/bookingcss.css}" type="text/css" xmlns:sec="http://www.w3.org/1999/xhtml"/>
 <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
 <!--      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
@@ -70,12 +70,12 @@
     </script>
 </form>
 
-<div class="container mt-5">
+<div class="container mt-5" th:if="${#lists.size(bookingsUser) > 0}">
         <div class="row mb-2">
                     <!-- Table to display bookings -->
                     <table class="table">
                         <thead>
-                        <tr th:each="booking : ${bookings}">
+                        <tr th:each="booking : ${bookingsUser}">
                             <th>From</th>
                             <th>To</th>
                             <th>Passengers</th>
@@ -88,7 +88,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="booking : ${bookings}" th:if="${booking.user.username == currentUser}">
+                        <tr th:each="booking : ${bookingsUser}">
                             <td th:text="${booking.pickupLocation}"></td>
                             <td th:text="${booking.dropOffLocation}"></td>
                             <td th:text="${booking.passengers}"></td>
@@ -102,7 +102,46 @@
                         </tbody>
                     </table>
                 </div>
+</div>
 
+<div class="container mt-5" sec:authorize="hasRole('ROLE_ADMIN')">
+    <div class="row mb-2">
+        <!-- Table to display bookings -->
+        <table class="table">
+            <thead>
+            <tr th:each="booking : ${bookings}">
+                <th>From</th>
+                <th>To</th>
+                <th>Passengers</th>
+                <th>Date</th>
+                <th>Pick-Up Time</th>
+                <th>Status</th>
+                <th>Return Date</th>
+                <th>Return Time</th>
+                <th>Action</th>
 
-<!--</div>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking : ${bookings}">
+                <td th:text="${booking.pickupLocation}"></td>
+                <td th:text="${booking.dropOffLocation}"></td>
+                <td th:text="${booking.passengers}"></td>
+                <td th:text="${#temporals.format(booking.pickupDateTime, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(booking.pickupDateTime, 'HH:mm')}"></td>
+                <td th:text="${booking.status}"></td>
+                <td th:text="${#temporals.format(booking.returnDateTime, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(booking.returnDateTime, 'HH:mm')}"></td>
+                <td>
+                    <form class="delete" th:method="POST" th:action="@{'booking/delete/{id}' (id=${booking.id})}">
+                        <button type="submit" class="booking-button">Delete</button>
+                    </form>
+                    <br>
+                    <a th:href="@{'/booking/edit-form/{id}' (id=${booking.id})}" class="custom-btn">Edit</a>
+                    <br>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

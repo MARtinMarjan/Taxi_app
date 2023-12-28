@@ -6,6 +6,7 @@ import com.example.taxi_app_final.service.CarService;
 import com.example.taxi_app_final.service.DriverService;
 import com.example.taxi_app_final.service.UserSerivce;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.taxi_app_final.repository.inMemoryBookingRepository;
@@ -39,10 +40,11 @@ public class BookingController {
     public String listBookings(Model model, HttpServletRequest request) {
         List<Booking> bookings = bookingService.getAllBookings();
         List<BookingDto> bookingDtos = inMemoryBookingRepository.findAll();
-//        if(pickupLocation!=null && dropOffLocation!=null){
-//            Optional<BookingDto> bookingDto = inMemoryBookingRepository.findByPickupAndDropOff(pickupLocation, dropOffLocation);
-//            bookingDto.ifPresent(dto -> model.addAttribute("bookingDto", dto));
-//        }
+        User user = userSerivce.loadUserByUsername(request.getRemoteUser());
+        List<Booking> bookingsUser = bookingService.findBookingsByUser(user);
+
+        model.addAttribute("bookingsUser", bookingsUser);
+
         model.addAttribute("currentUser",request.getRemoteUser());
         model.addAttribute("bookingsDto", bookingDtos);
         model.addAttribute("bookings", bookings);
@@ -119,10 +121,11 @@ public class BookingController {
 //        return "redirect:/bookings/list";
 //    }
 
-    @GetMapping("/delete/{id}")
+    @Transactional
+    @PostMapping("/delete/{id}")
     public String deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
-        return "redirect:/bookings";
+        return "redirect:/booking";
     }
 
     @PostMapping("/bookCar")

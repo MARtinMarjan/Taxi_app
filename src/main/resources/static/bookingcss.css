@@ -68,6 +68,14 @@ select {
     border: 1px solid #fd052f;
 }
 
+.custom-btn {
+    background-color: #343a40;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
 .container {
     margin-top: 20px;
 }
