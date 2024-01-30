@@ -18,12 +18,12 @@
 
         <label for="pickupLocation">From Pickup Location:</label>
         <select id="pickupLocation" name="pickupLocation" >
-            <option th:value="${booking.pickupLocation}" th:each="booking : ${bookingsDto}" th:text="${booking.pickupLocation}"></option>
+            <option th:each="bookingDto : ${bookingsDtos}"  th:value="${bookingDto.pickupLocation}"  th:text="${bookingDto.pickupLocation}"></option>
         </select>
 
         <label for="dropOffLocation">From Pickup Location:</label>
         <select id="dropOffLocation" name="dropOffLocation" >
-            <option th:value="${booking.dropOffLocation}" th:each="booking : ${bookingsDto}" th:text="${booking.dropOffLocation}"></option>
+            <option th:each="bookingDto : ${bookingsDtos}" th:value="${bookingDto.dropOffLocation}"  th:text="${bookingDto.dropOffLocation}"></option>
         </select>
 
 <!--        <label for="pickupLocation">From Pickup Location:</label>-->
@@ -75,15 +75,15 @@
                     <!-- Table to display bookings -->
                     <table class="table">
                         <thead>
-                        <tr th:each="booking : ${bookingsUser}">
+                        <tr>
                             <th>From</th>
                             <th>To</th>
                             <th>Passengers</th>
                             <th>Date</th>
                             <th>Pick-Up Time</th>
                             <th>Status</th>
-                            <th th:if="${booking.returnDateTime != null}">Return Date</th>
-                            <th th:if="${booking.returnDateTime != null}">Return Time</th>
+                            <th >Return Date</th>
+                            <th>Return Time</th>
 
                         </tr>
                         </thead>
@@ -95,8 +95,8 @@
                             <td th:text="${#temporals.format(booking.pickupDateTime, 'yyyy-MM-dd')}"></td>
                             <td th:text="${#temporals.format(booking.pickupDateTime, 'HH:mm')}"></td>
                             <td th:text="${booking.status}"></td>
-                            <td th:if="${booking.returnDateTime != null}" th:text="${#temporals.format(booking.returnDateTime, 'yyyy-MM-dd')}"></td>
-                            <td th:if="${booking.returnDateTime != null}" th:text="${#temporals.format(booking.returnDateTime, 'HH:mm')}"></td>
+                            <td th:text="${#temporals.format(booking.returnDateTime, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#temporals.format(booking.returnDateTime, 'HH:mm')}"></td>
 
                         </tr>
                         </tbody>
@@ -109,7 +109,7 @@
         <!-- Table to display bookings -->
         <table class="table">
             <thead>
-            <tr th:each="booking : ${bookings}">
+            <tr>
                 <th>From</th>
                 <th>To</th>
                 <th>Passengers</th>

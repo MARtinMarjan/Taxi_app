@@ -46,7 +46,7 @@ public class BookingController {
         model.addAttribute("bookingsUser", bookingsUser);
 
         model.addAttribute("currentUser",request.getRemoteUser());
-        model.addAttribute("bookingsDto", bookingDtos);
+        model.addAttribute("bookingsDtos", bookingDtos);
         model.addAttribute("bookings", bookings);
         model.addAttribute("bodyContent", "bookinghtml");
         return "master-template";
@@ -56,8 +56,17 @@ public class BookingController {
     public String listBookingInfo(Model model, HttpSession session){
 //        List<Driver> drivers = driverService.findDriverByStatus();
         BookingDto bookingDto = (BookingDto) session.getAttribute("savedBooking");
+
+        LocalDateTime userPickupTime = (LocalDateTime) session.getAttribute("userPickupTime");
+        LocalDateTime userReturnTime = (LocalDateTime) session.getAttribute("userReturnTime");
+        String userTripType = (String) session.getAttribute("userTripType");
+        int passengers = (int) session.getAttribute("passengers");
         List<Car> cars = driverService.findCarsForPassengers(bookingDto.getPassengers());
         model.addAttribute("bookingDto", bookingDto);
+        model.addAttribute("userPickupTime",userPickupTime);
+        model.addAttribute("userReturnTime", userReturnTime);
+        model.addAttribute("userTripType", userTripType);
+        model.addAttribute("passengers",passengers);
 //        model.addAttribute("drivers",drivers);
         model.addAttribute("cars",cars);
         model.addAttribute("bodyContent","bookingdetails");
@@ -80,26 +89,54 @@ public class BookingController {
                               @RequestParam int passengers,
                               @RequestParam(required = false) String returnDateTime){
 
-        Optional<BookingDto> bookingDto = inMemoryBookingRepository.findByPickupAndDropOff(pickupLocation, dropOffLocation);
-        // Parse pickupDateTime to LocalDateTime
-        LocalDateTime parsedPickupDateTime = LocalDateTime.parse(pickupDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-
-        // Parse returnDateTime to LocalDateTime only if it's not null
-        LocalDateTime parsedReturnDateTime = null;
-        if (returnDateTime != null && !returnDateTime.isEmpty()) {
-            parsedReturnDateTime = LocalDateTime.parse(returnDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
-        BookingDto savedBooking = inMemoryBookingRepository.save(tripType, bookingDto.get().getPickupLocation(), bookingDto.get().getDropOffLocation(),bookingDto.get().getDuration(), bookingDto.get().getKilometers(), parsedPickupDateTime, passengers, parsedReturnDateTime);
-        session.setAttribute("savedBooking", savedBooking);
-
-//            model.addAttribute("bookingDto", bookingDto);
-//            model.addAttribute("bodyContent","bookingdetails");
+//        Optional<BookingDto> bookingDto = inMemoryBookingRepository.findByPickupAndDropOff(pickupLocation, dropOffLocation);
+//        // Parse pickupDateTime to LocalDateTime
+//        LocalDateTime parsedPickupDateTime = LocalDateTime.parse(pickupDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 //
-//        String username = request.getRemoteUser();
-//        User user = userSerivce.loadUserByUsername(username);
-//        this.bookingService.saveBooking(tripType,pickupLocation,dropOffLocation,pickupDateTime,passengers,returnDateTime, user);
+//        // Parse returnDateTime to LocalDateTime only if it's not null
+//        LocalDateTime parsedReturnDateTime = null;
+//        if (returnDateTime != null && !returnDateTime.isEmpty()) {
+//            parsedReturnDateTime = LocalDateTime.parse(returnDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+//        }
+////        BookingDto savedBooking = inMemoryBookingRepository.save(tripType, bookingDto.get().getPickupLocation(),
+////        bookingDto.get().getDropOffLocation(),bookingDto.get().getDuration(),
+////        bookingDto.get().getKilometers(), parsedPickupDateTime, passengers, parsedReturnDateTime);
+////        session.setAttribute("savedBooking", savedBooking);
+//        session.setAttribute("userPickupTime", parsedPickupDateTime );
+//        session.setAttribute("userReturnTime",parsedReturnDateTime);
+//        session.setAttribute("userTripType", tripType);
+//        session.setAttribute("passengers",passengers);
+//        session.setAttribute("savedBooking", bookingDto);
+////        session.setAttribute("userPickupLocation",bookingDto.get().getPickupLocation());
+////        session.setAttribute("userDropOffLocation",bookingDto.get().getDropOffLocation());
+////        session.setAttribute("userDuration",bookingDto.get().getDuration());
+////        session.setAttribute("userKilometers",bookingDto.get().getKilometers());
+//
+//        return "redirect:/booking/list";
+        Optional<BookingDto> bookingDtoOptional = inMemoryBookingRepository.findByPickupAndDropOff(pickupLocation, dropOffLocation);
 
-        return "redirect:/booking/list";
+        if (bookingDtoOptional.isPresent()) {
+            BookingDto bookingDto = bookingDtoOptional.get();
+
+            LocalDateTime parsedPickupDateTime = LocalDateTime.parse(pickupDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+            LocalDateTime parsedReturnDateTime = null;
+            if (returnDateTime != null && !returnDateTime.isEmpty()) {
+                parsedReturnDateTime = LocalDateTime.parse(returnDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            }
+
+            session.setAttribute("userPickupTime", parsedPickupDateTime);
+            session.setAttribute("userReturnTime", parsedReturnDateTime);
+            session.setAttribute("userTripType", tripType);
+            session.setAttribute("passengers", passengers);
+            session.setAttribute("savedBooking", bookingDto);
+
+            return "redirect:/booking/list";
+        } else {
+            // Handle the case where the booking is not present in the repository
+            // You might want to show an error message or redirect to an error page
+            return "redirect:/error";
+        }
 
 
     }
