@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home","/**/*.css","/**/*.png", "/cars", "/drivers","/register").permitAll()
+                .antMatchers("/", "/home", "/**/*.css", "/**/*.png", "/cars", "/drivers", "/register ", "/payment", "/checkout", "/create-payment-intent").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**","/static/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**");
     }
 
     @Override
