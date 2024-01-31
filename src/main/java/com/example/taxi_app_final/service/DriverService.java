@@ -28,5 +28,6 @@ public interface DriverService {
 
     List<Car> findCarsForPassengers(int capacity);
 
+    Driver setStatus(Long id);
 
 }

@@ -16,5 +16,8 @@ public interface BookingService {
     void deleteBooking(Long id);
     List<Booking> findBookingsByUser(User user);
 
+    Booking accept(Long id);
+    Booking cancel(Long id);
+
 
 }

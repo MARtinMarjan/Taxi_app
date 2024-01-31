@@ -1,5 +1,4 @@
-<link rel="stylesheet" th:href="@{/bookingcss.css}" type="text/css" xmlns:sec="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"/>
+<link rel="stylesheet" th:href="@{/bookingcss.css}" type="text/css" xmlns:sec="http://www.w3.org/1999/xhtml"/>
 <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
 <!--      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
@@ -85,27 +84,34 @@
                             <th>Status</th>
                             <th >Return Date</th>
                             <th>Return Time</th>
+                            <th>Action</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="booking : ${bookingsUser}">
-                            <td th:text="${booking.pickupLocation}"></td>
-                            <td th:text="${booking.dropOffLocation}"></td>
-                            <td th:text="${booking.passengers}"></td>
-                            <td th:text="${#temporals.format(booking.pickupDateTime, 'yyyy-MM-dd')}"></td>
-                            <td th:text="${#temporals.format(booking.pickupDateTime, 'HH:mm')}"></td>
-                            <td th:text="${booking.status}"></td>
-                            <td th:text="${#temporals.format(booking.returnDateTime, 'yyyy-MM-dd')}"></td>
-                            <td th:text="${#temporals.format(booking.returnDateTime, 'HH:mm')}"></td>
+                        <tr th:each="bookingU : ${bookingsUser}">
+                            <td th:text="${bookingU.pickupLocation}"></td>
+                            <td th:text="${bookingU.dropOffLocation}"></td>
+                            <td th:text="${bookingU.passengers}"></td>
+                            <td th:text="${#temporals.format(bookingU.pickupDateTime, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#temporals.format(bookingU.pickupDateTime, 'HH:mm')}"></td>
+                            <td th:text="${bookingU.status}"></td>
+                            <td th:text="${#temporals.format(bookingU.returnDateTime, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#temporals.format(bookingU.returnDateTime, 'HH:mm')}"></td>
+                            <td>
+                                <form th:method="post" th:action="@{'/booking/cancel/{id}' (id=${bookingU.id})}">
+                                    <button type="submit" class="booking-button">Cancel</button>
+
+                                </form>
+                            </td>
 
                         </tr>
                         </tbody>
                     </table>
                 </div>
 </div>
-
-<div class="container mt-5" sec:authorize="hasRole('ROLE_ADMIN')">
+<th:block sec:authorize="hasRole('ROLE_ADMIN')" >
+<div class="container mt-5" >
     <div class="row mb-2">
         <!-- Table to display bookings -->
         <table class="table">
@@ -134,11 +140,15 @@
                 <td th:text="${#temporals.format(booking.returnDateTime, 'yyyy-MM-dd')}"></td>
                 <td th:text="${#temporals.format(booking.returnDateTime, 'HH:mm')}"></td>
                 <td>
-                    <form class="delete" th:method="POST" th:action="@{'booking/delete/{id}' (id=${booking.id})}">
-                        <button type="submit" class="booking-button">Delete</button>
+<!--                    <form class="delete" th:method="POST" th:action="@{'booking/delete/{id}' (id=${booking.id})}">-->
+<!--                        <button type="submit" class="booking-button">Delete</button>-->
+<!--                    </form>-->
+<!--                    <br>-->
+                    <form th:method="post" th:action="@{'/booking/accept/{id}' (id=${booking.id})}">
+                            <button type="submit" class="booking-button">Accept</button>
+
                     </form>
-                    <br>
-                    <a th:href="@{'/booking/edit-form/{id}' (id=${booking.id})}" class="custom-btn">Edit</a>
+<!--                    <a th:href="@{'/booking/accept/{id}' (id=${booking.id})}" class="custom-btn">Accept</a>-->
                     <br>
                 </td>
             </tr>
@@ -146,3 +156,4 @@
         </table>
     </div>
 </div>
+</th:block>

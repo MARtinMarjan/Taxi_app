@@ -164,6 +164,25 @@ public class BookingController {
         bookingService.deleteBooking(id);
         return "redirect:/booking";
     }
+    @PostMapping("/accept/{id}")
+    public String markAccepted(@PathVariable Long id) {
+        System.out.println("Marking booking as accepted for ID: " + id);
+        this.bookingService.accept(id);
+        // If you want to print something after the accept method
+        System.out.println("Booking accepted successfully for ID: " + id);
+        return "redirect:/booking";
+    }
+
+    @PostMapping("/cancel/{id}")
+    public String userCancel(@PathVariable Long id) {
+        System.out.println("Marking booking as accepted for ID: " + id);
+        this.bookingService.cancel(id);
+        // If you want to print something after the accept method
+        System.out.println("Booking accepted successfully for ID: " + id);
+        return "redirect:/booking";
+    }
+
+
 
     @PostMapping("/bookCar")
     public String bookCar(@RequestParam String tripType,
@@ -194,6 +213,7 @@ public class BookingController {
 
         return "redirect:/booking"; // Redirect to the original page after booking
     }
+
 
 
     /*@PostMapping

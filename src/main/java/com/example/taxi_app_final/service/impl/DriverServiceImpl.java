@@ -62,4 +62,11 @@ public class DriverServiceImpl implements DriverService {
     public List<Car> findCarsForPassengers(int capacity) {
         return driverRepository.findAvailableCarsByCapacity(capacity, DriverStatus.AVAILABLE);
     }
+
+    @Override
+    public Driver setStatus(Long id) {
+        Driver driver = driverRepository.findById(id).orElseThrow(RuntimeException::new);
+        driver.setStatus(DriverStatus.UNAVAILABLE);
+        return driverRepository.save(driver);
+    }
 }

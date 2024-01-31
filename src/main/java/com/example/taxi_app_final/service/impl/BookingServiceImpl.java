@@ -1,8 +1,10 @@
 package com.example.taxi_app_final.service.impl;
 
 import com.example.taxi_app_final.model.Booking;
+import com.example.taxi_app_final.model.BookingStatus;
 import com.example.taxi_app_final.model.Car;
 import com.example.taxi_app_final.model.User;
+import com.example.taxi_app_final.model.exceptions.InvalidBookingException;
 import com.example.taxi_app_final.repository.BookingRepository;
 import com.example.taxi_app_final.service.BookingService;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,19 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> findBookingsByUser(User user) {
         return bookingRepository.findAllByUser(user);
     }
+
+    @Override
+    public Booking accept(Long id) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new InvalidBookingException(id));
+        booking.setStatus(BookingStatus.ACCEPTED);
+        return bookingRepository.save(booking);
+    }
+
+    @Override
+    public Booking cancel(Long id) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new InvalidBookingException(id));
+        booking.setStatus(BookingStatus.CANCELLED);
+        return bookingRepository.save(booking);    }
 }
 
 

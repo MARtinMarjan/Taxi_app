@@ -19,9 +19,9 @@ public class Booking {
     private LocalDateTime pickupDateTime;
     private int passengers;
     private LocalDateTime returnDateTime;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Driver driver;
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
