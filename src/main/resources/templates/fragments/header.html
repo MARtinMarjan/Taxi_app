@@ -1,13 +1,13 @@
 <header>
     <div class="nav container">
         <i class='bx bx-menu' id="menu-icon"></i>
-        <a href="" class="logo">Taxi<span>App</span></a>
+        <a th:href="@{/}" class="logo">Taxi<span>App</span></a>
         <ul class="navbar">
 
             <li><a th:href="@{/}">Home</a></li>
             <li><a th:href="@{/drivers}">Drivers</a></li>
             <li><a th:href="@{/cars}">Cars</a></li>
-            <li><a th:href="@{/booking}">Booking</a></li>
+            <li><a th:href="@{/booking/info}">Booking</a></li>
             <li>
                 <a class="nav-item"
                    sec:authorize="isAuthenticated()">

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -73,6 +74,20 @@ public class CarController {
             this.carService.save(model, licensePlate, color, year, capacity, bag, pricePerKm);
         }
         return "redirect:/cars";
+    }
+
+    @PostMapping("/cars/filter")
+    public String filterCars(@RequestParam("tripType") String tripType,
+                             @RequestParam("pickupLocation") String pickupLocation,
+                             @RequestParam("dropOffLocation") String dropOffLocation,
+                             @RequestParam("pickupDateTime") LocalDateTime pickupDateTime,
+                             @RequestParam("passengers") int passengers,
+                             @RequestParam(value = "returnDateTime", required = false) LocalDateTime returnDateTime,
+                             Model model) {
+        List<Car> filteredCars = carService.getFilteredCars(tripType, pickupLocation, dropOffLocation, pickupDateTime, passengers, returnDateTime);
+        model.addAttribute("cars", filteredCars);
+        model.addAttribute("bodyContent", "carList");
+        return "master-template";
     }
 
 

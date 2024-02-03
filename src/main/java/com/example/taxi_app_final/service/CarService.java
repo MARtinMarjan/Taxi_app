@@ -2,6 +2,7 @@ package com.example.taxi_app_final.service;
 
 import com.example.taxi_app_final.model.Car;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public interface CarService {
     //Optional<Product> edit(Long id, ProductDto productDto);
 
     public void deleteCar(Long id);
+
+    public List<Car> getFilteredCars(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime);
 
     void deleteById(Long id);
 

@@ -23,6 +23,9 @@ public class Car {
 //    @OneToOne
 //    private Driver driver;
 
+    @OneToOne
+    private Booking booking;
+
     public Car(){}
 
     public Car(String model, String licencePlate, String color, int year, int capacity, int bag, Long pricePerKm) {

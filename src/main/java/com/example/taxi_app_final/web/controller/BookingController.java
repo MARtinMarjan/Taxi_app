@@ -170,7 +170,7 @@ public class BookingController {
         this.bookingService.accept(id);
         // If you want to print something after the accept method
         System.out.println("Booking accepted successfully for ID: " + id);
-        return "redirect:/booking";
+        return "redirect:/booking/info";
     }
 
     @PostMapping("/cancel/{id}")
@@ -179,7 +179,7 @@ public class BookingController {
         this.bookingService.cancel(id);
         // If you want to print something after the accept method
         System.out.println("Booking accepted successfully for ID: " + id);
-        return "redirect:/booking";
+        return "redirect:/booking/info";
     }
 
 
@@ -211,9 +211,23 @@ public class BookingController {
         // Optionally, you can add attributes to the model to display messages or data on the page
         model.addAttribute("bookingMessage", "Booking successful");
 
-        return "redirect:/booking"; // Redirect to the original page after booking
+        return "redirect:/booking/info"; // Redirect to the original page after booking
     }
+    @GetMapping("/info")
+    public String showBookingInfo(Model model, HttpServletRequest request) {
+        List<Booking> bookings = bookingService.getAllBookings();
+        List<BookingDto> bookingDtos = inMemoryBookingRepository.findAll();
+        User user = userSerivce.loadUserByUsername(request.getRemoteUser());
+        List<Booking> bookingsUser = bookingService.findBookingsByUser(user);
 
+        model.addAttribute("bookingsUser", bookingsUser);
+
+        model.addAttribute("currentUser",request.getRemoteUser());
+        model.addAttribute("bookingsDto", bookingDtos);
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("bodyContent","bookingInfo");
+        return "master-template";
+    }
 
 
     /*@PostMapping

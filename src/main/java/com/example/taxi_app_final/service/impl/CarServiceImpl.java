@@ -11,6 +11,7 @@ import org.springframework.context.annotation.AdviceMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,11 @@ public class CarServiceImpl implements CarService {
         List<Driver> drivers = driverRepository.findByCarId(car.getId());
         driverRepository.deleteAll(drivers);
         carRepository.delete(car);
+    }
+
+    @Override
+    public List<Car> getFilteredCars(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime) {
+        return null;
     }
 
     @Override
