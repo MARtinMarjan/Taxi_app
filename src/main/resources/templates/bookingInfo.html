@@ -35,10 +35,13 @@
         <td>
           <form th:method="post" th:action="@{'/booking/cancel/{id}' (id=${bookingU.id})}">
             <button type="submit" class="booking-button">Cancel</button>
-
           </form>
         </td>
-
+        <td th:if="${#strings.equals(bookingU.status, 'ACCEPTED')}">
+          <form th:method="get" th:action="@{'/payment'}">
+            <button type="submit" class="payment-button">Pay</button>
+          </form>
+        </td>
       </tr>
       </tbody>
     </table>
