@@ -26,4 +26,6 @@ public interface UserSerivce {
 
     Optional<User> findByCar(Car car);
 
+    User update(Long id, String name, String surname, String username);
+
 }

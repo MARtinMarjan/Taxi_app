@@ -51,31 +51,21 @@ public class DriverController {
 
     @GetMapping("/edit-form/{id}")
     public String editDriverPage(@PathVariable Long id, Model model) {
-//        if (this.driverService.findById(id).isPresent()) {
-//            Driver driver = this.driverService.findById(id).get();
-//            List<Car> cars = this.carService.findAll();
-//            model.addAttribute("driver", driver);
-//            model.addAttribute("cars",cars);
-//            model.addAttribute("bodyContent", "add_driver");
-//            return "master-template";
-//        }
-        return "redirect:/driver?error=DriverNotFound";
+        User driver = userSerivce.findById(id).orElseThrow(RuntimeException::new);
+        model.addAttribute("driver", driver);
+        model.addAttribute("bodyContent", "add_driver");
+        return "master-template";
     }
 
 
     @PostMapping("/add")
     public String saveDriver(
             @RequestParam(required = false) Long id,
-            @RequestParam String fullName,
-            @RequestParam("car.id") Long carId) {
+            @RequestParam String name,
+            @RequestParam String surname,
+            @RequestParam String username) {
 
-        Car car = carService.findById(carId).orElse(null);
-
-        if (id != null) {
-//            this.driverService.edit(id, fullName, car);
-        } else {
-//            this.driverService.save(fullName, car);
-        }
+        userSerivce.update(id,name,surname,username);
         return "redirect:/drivers";
     }
 

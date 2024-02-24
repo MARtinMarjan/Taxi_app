@@ -6,6 +6,7 @@ import com.example.taxi_app_final.model.Role;
 import com.example.taxi_app_final.model.User;
 import com.example.taxi_app_final.repository.UserRepository;
 import com.example.taxi_app_final.service.UserSerivce;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,6 +67,18 @@ public class UserServiceImpl implements UserSerivce {
     @Override
     public Optional<User> findByCar(Car car) {
         return userRepository.findByCar(car);
+    }
+
+    @Override
+    public User update(Long id, String name, String surname, String username) {
+        User user = userRepository.findById(id);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setUsername(username);
+        // Re-authenticate the user
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return userRepository.save(user);
     }
 
 

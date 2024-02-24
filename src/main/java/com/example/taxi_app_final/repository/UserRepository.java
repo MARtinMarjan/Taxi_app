@@ -27,6 +27,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByCar(Car car);
 
+    User findById(Long id);
+
     @Query("SELECT d.car FROM User d WHERE d.car.capacity >= :minCapacity AND d.status = :driverStatus")
     List<Car> findAvailableCarsByCapacity(@Param("minCapacity") int minCapacity, @Param("driverStatus") DriverStatus driverStatus);
 }

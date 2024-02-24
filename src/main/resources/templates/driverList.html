@@ -18,6 +18,11 @@
                         </h3>
                         <div th:if="${driver.car != null}">
                             <b>Drives:</b> <span th:text="${driver.car?.getModel()}"></span>
+                            <div>
+                                <a th:href="@{'/cars/{id}' (id=${driver.car?.id})}" style="color:grey">View Car</a>
+<!--                                th:href="@{'/products/{id}/edit' (id=${prod.id})}"-->
+
+                            </div>
                         </div>
                         <br>
                         <div>

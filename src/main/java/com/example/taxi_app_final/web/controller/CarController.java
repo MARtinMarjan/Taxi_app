@@ -122,6 +122,13 @@ public class CarController {
         model.addAttribute("bodyContent", "carList");
         return "master-template";
     }
+    @GetMapping("/{id}")
+    public String showCar(@PathVariable Long id, Model model) {
+        Car car = carService.findById(id).orElseThrow(RuntimeException::new);
+        model.addAttribute("car", car);
+        model.addAttribute("bodyContent", "singleCar");
+        return "master-template";
+    }
 
 
 }
