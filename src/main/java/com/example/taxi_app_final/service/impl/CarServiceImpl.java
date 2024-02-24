@@ -1,13 +1,12 @@
 package com.example.taxi_app_final.service.impl;
 
 import com.example.taxi_app_final.model.Car;
-import com.example.taxi_app_final.model.Driver;
-import com.example.taxi_app_final.model.DriverStatus;
+import com.example.taxi_app_final.model.User;
 import com.example.taxi_app_final.model.exceptions.CarNotFoundException;
 import com.example.taxi_app_final.repository.CarRepository;
-import com.example.taxi_app_final.repository.DriverRepository;
+import com.example.taxi_app_final.repository.UserRepository;
 import com.example.taxi_app_final.service.CarService;
-import org.springframework.context.annotation.AdviceMode;
+import com.example.taxi_app_final.service.UserSerivce;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +18,13 @@ import java.util.Optional;
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
-    private final DriverRepository driverRepository;
+    private final UserSerivce userSerivce;
+    private final UserRepository userRepository;
 
-    public CarServiceImpl(CarRepository carRepository, DriverRepository driverRepository) {
+    public CarServiceImpl(CarRepository carRepository, UserSerivce userSerivce, UserRepository userRepository) {
         this.carRepository = carRepository;
-        this.driverRepository = driverRepository;
+        this.userSerivce = userSerivce;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -42,15 +43,26 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Optional<Car> save(String model, String licencePlate, String color, int year, int capacity, int bag, Long pricePerKm) {
-        return Optional.of(this.carRepository.save(new Car(model,licencePlate,color,year,capacity,bag,pricePerKm)));
+    public Optional<Car> save(String model, String licencePlate, String color, int year, int capacity, int bag, Long pricePerKm, Long userId) {
+        Optional<User> userOptional = userSerivce.findById(userId);
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
+            Car car = new Car(model,licencePlate,color,year,capacity,bag,pricePerKm);
+            user.setCar(car);
+            this.carRepository.save(car);
+            userRepository.save(user);
+            return Optional.of(car);
+        }
+        return Optional.empty();
     }
 
     @Transactional
     public void deleteCar(Long id){
         Car car = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
-        List<Driver> drivers = driverRepository.findByCarId(car.getId());
-        driverRepository.deleteAll(drivers);
+        User user = userRepository.findByCarId(id).orElseThrow(RuntimeException::new);
+        user.setCar(null);
+//        List<Driver> drivers = driverRepository.findByCarId(car.getId());
+//        driverRepository.deleteAll(drivers);
         carRepository.delete(car);
     }
 

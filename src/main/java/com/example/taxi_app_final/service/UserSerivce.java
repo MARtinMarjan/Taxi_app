@@ -1,10 +1,9 @@
 package com.example.taxi_app_final.service;
-
-
+import com.example.taxi_app_final.model.Car;
 import com.example.taxi_app_final.model.Role;
 import com.example.taxi_app_final.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 public interface UserSerivce {
 
@@ -14,5 +13,17 @@ public interface UserSerivce {
 
     User loadUserByUsername(String s);
 
+    //methods we need for the driver
+
+    List<User> findAllDrivers();
+    Optional<User> findById(Long id);
+
+    List<User> findDriverByStatus();
+
+    List<Car> findCarsForPassengers(int capacity);
+
+    User setStatus(Long id);
+
+    Optional<User> findByCar(Car car);
 
 }

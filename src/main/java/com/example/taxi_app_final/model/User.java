@@ -34,6 +34,12 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    //adding the attributes from Driver
+    @OneToOne
+    private Car car;
+
+    @Enumerated(EnumType.STRING)
+    private DriverStatus status;
 
 
     public User() {
@@ -45,7 +51,15 @@ public class User implements UserDetails {
         this.name = name;
         this.surname = surname;
         this.role = role;
+        this.status = DriverStatus.AVAILABLE;
+        this.car = null;
     }
+
+
+    public void addCar(Car car) {
+        this.car = car;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

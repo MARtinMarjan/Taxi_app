@@ -14,9 +14,11 @@
                         <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
                     </div>
                     <div class="col-md-5">
-                        <h3 th:text="${driver.fullName}">
+                        <h3 th:text="${driver.name + ' ' + driver.surname}">
                         </h3>
-                        <div><b>Drives:</b> <th:block th:text="${driver.car.getModel()}"></th:block></div>
+                        <div th:if="${driver.car != null}">
+                            <b>Drives:</b> <span th:text="${driver.car?.getModel()}"></span>
+                        </div>
                         <br>
                         <div>
                             <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
@@ -25,10 +27,6 @@
                     <div class="col-md-4">
                         <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                             <div class="row" style="column-count: 2; column-gap: 5px;">
-                                <form class="delete" th:method="POST" th:action="@{'drivers/delete/{id}' (id=${driver.id})}">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-
                                 <br>
                                 <br>
 
@@ -45,17 +43,6 @@
                 <hr>
             </div>
         </div>
-
-        <div class="col mb-3 ml-5">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 d-flex justify-content-center" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a href="/drivers/add-driver" class="btn btn-dark" style="width: 100%;">
-                        Add new driver
-                    </a>
-                </div>
-            </div>
-        </div>
-
 
     </div>
 </div>

@@ -22,11 +22,11 @@ public class Booking {
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     @ManyToOne(cascade = CascadeType.ALL)
-    private Driver driver;
+    private User driver;
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    public Booking(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime, User user) {
+    public Booking(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime, User user, User driver) {
         this.tripType = tripType;
         this.pickupLocation = pickupLocation;
         this.dropOffLocation = dropOffLocation;
@@ -35,6 +35,7 @@ public class Booking {
         this.returnDateTime = returnDateTime;
         this.user = user;
         this.status = BookingStatus.REQUESTED;
+        this.driver = driver;
     }
     public Booking(){}
 

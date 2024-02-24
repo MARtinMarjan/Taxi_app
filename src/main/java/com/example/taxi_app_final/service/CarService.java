@@ -14,7 +14,7 @@ public interface CarService {
 
     Optional<Car> findByName(String model);
 
-    Optional<Car> save(String model, String licencePlate, String color, int year, int capacity, int bag, Long pricePerKm);
+    Optional<Car> save(String model, String licencePlate, String color, int year, int capacity, int bag, Long pricePerKm,Long userId);
 
     //Optional<Car> save(ProductDto productDto);
 

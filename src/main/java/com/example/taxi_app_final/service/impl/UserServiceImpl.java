@@ -1,5 +1,7 @@
 package com.example.taxi_app_final.service.impl;
 
+import com.example.taxi_app_final.model.Car;
+import com.example.taxi_app_final.model.DriverStatus;
 import com.example.taxi_app_final.model.Role;
 import com.example.taxi_app_final.model.User;
 import com.example.taxi_app_final.repository.UserRepository;
@@ -10,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserSerivce {
@@ -29,6 +34,38 @@ public class UserServiceImpl implements UserSerivce {
     @Override
     public User loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException(s));
+    }
+
+    @Override
+    public List<User> findAllDrivers() {
+        return userRepository.findByRole(Role.ROLE_ADMIN);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findByRoleAndId(Role.ROLE_ADMIN,id);
+    }
+
+    @Override
+    public List<User> findDriverByStatus() {
+        return userRepository.findAllByStatusAndRole(DriverStatus.AVAILABLE, Role.ROLE_ADMIN);
+    }
+
+    @Override
+    public List<Car> findCarsForPassengers(int capacity) {
+        return userRepository.findAvailableCarsByCapacity(capacity, DriverStatus.AVAILABLE);
+    }
+
+    @Override
+    public User setStatus(Long id) {
+        User user = findById(id).orElseThrow(RuntimeException::new);
+        user.setStatus(DriverStatus.UNAVAILABLE);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findByCar(Car car) {
+        return userRepository.findByCar(car);
     }
 
 

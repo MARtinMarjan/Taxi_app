@@ -5,7 +5,7 @@
 
 <div class="container">
 
-    <section class="cars container row" th:each="car : ${cars}">
+    <section class="cars container row" th:if="cars!=null" th:each="car : ${cars}">
         <div class="col-12">
             <div class="mb-3">
                 <h3 class="car mt-0 p-2" th:text="${car.model}"></h3>
@@ -84,7 +84,7 @@
     <!--        </tbody>-->
     <!--    </table>-->
 
-    <div class="col mb-3">
+    <div class="col mb-3" th:if="${!hasCar}">
         <div class="row">
             <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a th:href="@{/cars/add-car}" class="btn btn-block btn-dark add-product-btn">

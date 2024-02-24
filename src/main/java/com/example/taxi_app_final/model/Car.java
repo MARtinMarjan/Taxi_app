@@ -21,7 +21,7 @@ public class Car {
     private Long pricePerKm;
 
 //    @OneToOne
-//    private Driver driver;
+//    private User driver;
 
     @OneToOne
     private Booking booking;

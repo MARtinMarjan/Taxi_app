@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking, String> {
 
     Optional<Booking> findById(Long id);
-    //Optional<Booking> findBy(String model);
     void deleteById(Long id);
-
     List<Booking> findAllByUser(User user);
+
+    List<Booking> findAllByDriver(User driver);
 
 }

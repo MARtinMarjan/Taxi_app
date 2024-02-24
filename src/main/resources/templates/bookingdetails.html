@@ -4,18 +4,10 @@
 <script th:src="@{/webjars/thymeleaf-extras-java8time/3.0.4.RELEASE/js/thymeleaf-extras-java8time.min.js}"></script>
 
 <div class="container mt-5">
-    <form th:action="@{/booking/bookCar}" method="post">
         <div class="row mb-2">
             <div class="col-md-3 mt-3 mb-3 custom">
                 <h4 class="mt-3">Travel Info:</h4>
                 <div class="mb-3" th:if="${bookingDto != null}">
-                    <input type="hidden" name="tripType" th:value="${userTripType}" />
-                    <input type="hidden" name="pickupLocation" th:value="${bookingDto.pickupLocation}" />
-                    <input type="hidden" name="dropOffLocation" th:value="${bookingDto.dropOffLocation}" />
-                    <input type="hidden" name="passengers" th:value="${passengers}" />
-                    <input type="hidden" name="pickupDateTime" th:value="${userPickupTime}" />
-                    <input type="hidden" name="returnDateTime" th:value="${userReturnTime}" />
-
 
                     <!--<div th:each="booking : ${bookings}">-->
                     <div class="d-flex justify-content-between">From: <span th:text="${bookingDto.pickupLocation}"></span></div>
@@ -34,7 +26,6 @@
             </div>
             <div class="col-md-8">
                 <section class="cars container row" th:each="car : ${cars}">
-                    <input type="hidden" name="carId" th:value="${car.id}" />
                     <div class="col-12">
                         <div class="mb-3">
                             <h3 class="car mt-0 p-2" th:text="${car.model}"></h3>
@@ -45,15 +36,6 @@
                                 </div>
                                 <div class="col-12 col-md-9 pl-2">
                                     <div class="row justify-right">
-                                        <!--                                    <div class="row col-12 col-md-5 mb-2 mb-md-0">-->
-                                        <!--                                        <div class="col-6 mb-2">Year:</div>-->
-                                        <!--                                        <div class="col-6 font-weight-bold" th:text="${car.year}"></div>-->
-                                        <!--                                        <div class="col-6 mb-2">Color:</div>-->
-                                        <!--                                        <div class="col-6 font-weight-bold" th:text="${car.color}"></div>-->
-                                        <!--                                        <div class="col-6 mb-2">License Place:</div>-->
-                                        <!--                                        <div class="col-6 font-weight-bold" th:text="${car.licensePlate}"></div>-->
-
-                                        <!--                                    </div>-->
                                         <div class="col-12 col-md-5 mb-2 mb-md-0">
                                             <div class="row align-items-center mb-3">
                                                 <div class="col-6 mb-3">Max Passengers:</div>
@@ -76,7 +58,10 @@
                                                 <div class="col-6 font-weight-bold calculated-price" th:with="result=${car.pricePerKm * bookingDto.kilometers}"> <span th:text="${result+'$'}"></span></div>
                                             </div>
                                             <div>
-                                                <button class="booking-button" type="submit">Book this car</button>
+                                                <form th:method="POST" th:action="@{'/booking/bookCar/{id}' (id=${car.id})}">
+                                                    <button type="submit">Book this car</button>
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
@@ -87,5 +72,4 @@
                 </section>
             </div>
         </div>
-    </form>
 </div>

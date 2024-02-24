@@ -12,9 +12,11 @@ public interface BookingService {
 
     List<Booking> getAllBookings();
     Booking getBookingById(Long id);
-    Optional<Booking> saveBooking(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime, User user);
+    Optional<Booking> saveBooking(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime, User user, User driver);
     void deleteBooking(Long id);
     List<Booking> findBookingsByUser(User user);
+
+    List<Booking> findBookingsByDriver(User driver);
 
     Booking accept(Long id);
     Booking cancel(Long id);

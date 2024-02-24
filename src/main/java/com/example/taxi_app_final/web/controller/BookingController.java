@@ -3,7 +3,6 @@ package com.example.taxi_app_final.web.controller;
 import com.example.taxi_app_final.model.*;
 import com.example.taxi_app_final.service.BookingService;
 import com.example.taxi_app_final.service.CarService;
-import com.example.taxi_app_final.service.DriverService;
 import com.example.taxi_app_final.service.UserSerivce;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,29 +24,19 @@ public class BookingController {
     private final BookingService bookingService;
     private final UserSerivce userSerivce;
     private final CarService carService;
-    private final DriverService driverService;
     private final inMemoryBookingRepository inMemoryBookingRepository;
 
-    public BookingController(BookingService bookingService, UserSerivce userSerivce, CarService carService, DriverService driverService, com.example.taxi_app_final.repository.inMemoryBookingRepository inMemoryBookingRepository) {
+    public BookingController(BookingService bookingService, UserSerivce userSerivce, CarService carService,  com.example.taxi_app_final.repository.inMemoryBookingRepository inMemoryBookingRepository) {
         this.bookingService = bookingService;
         this.userSerivce = userSerivce;
         this.carService = carService;
-        this.driverService = driverService;
         this.inMemoryBookingRepository = inMemoryBookingRepository;
     }
 
     @GetMapping
     public String listBookings(Model model, HttpServletRequest request) {
-        List<Booking> bookings = bookingService.getAllBookings();
         List<BookingDto> bookingDtos = inMemoryBookingRepository.findAll();
-        User user = userSerivce.loadUserByUsername(request.getRemoteUser());
-        List<Booking> bookingsUser = bookingService.findBookingsByUser(user);
-
-        model.addAttribute("bookingsUser", bookingsUser);
-
-        model.addAttribute("currentUser",request.getRemoteUser());
         model.addAttribute("bookingsDtos", bookingDtos);
-        model.addAttribute("bookings", bookings);
         model.addAttribute("bodyContent", "bookinghtml");
         return "master-template";
     }
@@ -61,7 +50,9 @@ public class BookingController {
         LocalDateTime userReturnTime = (LocalDateTime) session.getAttribute("userReturnTime");
         String userTripType = (String) session.getAttribute("userTripType");
         int passengers = (int) session.getAttribute("passengers");
-        List<Car> cars = driverService.findCarsForPassengers(bookingDto.getPassengers());
+
+        List<Car> cars = userSerivce.findCarsForPassengers(bookingDto.getPassengers());
+
         model.addAttribute("bookingDto", bookingDto);
         model.addAttribute("userPickupTime",userPickupTime);
         model.addAttribute("userReturnTime", userReturnTime);
@@ -89,30 +80,7 @@ public class BookingController {
                               @RequestParam int passengers,
                               @RequestParam(required = false) String returnDateTime){
 
-//        Optional<BookingDto> bookingDto = inMemoryBookingRepository.findByPickupAndDropOff(pickupLocation, dropOffLocation);
-//        // Parse pickupDateTime to LocalDateTime
-//        LocalDateTime parsedPickupDateTime = LocalDateTime.parse(pickupDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//
-//        // Parse returnDateTime to LocalDateTime only if it's not null
-//        LocalDateTime parsedReturnDateTime = null;
-//        if (returnDateTime != null && !returnDateTime.isEmpty()) {
-//            parsedReturnDateTime = LocalDateTime.parse(returnDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//        }
-////        BookingDto savedBooking = inMemoryBookingRepository.save(tripType, bookingDto.get().getPickupLocation(),
-////        bookingDto.get().getDropOffLocation(),bookingDto.get().getDuration(),
-////        bookingDto.get().getKilometers(), parsedPickupDateTime, passengers, parsedReturnDateTime);
-////        session.setAttribute("savedBooking", savedBooking);
-//        session.setAttribute("userPickupTime", parsedPickupDateTime );
-//        session.setAttribute("userReturnTime",parsedReturnDateTime);
-//        session.setAttribute("userTripType", tripType);
-//        session.setAttribute("passengers",passengers);
-//        session.setAttribute("savedBooking", bookingDto);
-////        session.setAttribute("userPickupLocation",bookingDto.get().getPickupLocation());
-////        session.setAttribute("userDropOffLocation",bookingDto.get().getDropOffLocation());
-////        session.setAttribute("userDuration",bookingDto.get().getDuration());
-////        session.setAttribute("userKilometers",bookingDto.get().getKilometers());
-//
-//        return "redirect:/booking/list";
+
         Optional<BookingDto> bookingDtoOptional = inMemoryBookingRepository.findByPickupAndDropOff(pickupLocation, dropOffLocation);
 
         if (bookingDtoOptional.isPresent()) {
@@ -141,23 +109,6 @@ public class BookingController {
 
     }
 
-//    @PostMapping("/create")
-//    public String createBooking(@ModelAttribute BookingForm bookingForm, Model model) {
-//        Optional<Booking> newBooking = bookingService.saveBooking(
-//                bookingForm.getTripType(),
-//                bookingForm.getPickupLocation(),
-//                bookingForm.getDropOffLocation(),
-//                bookingForm.getPickupDateTime(),
-//                bookingForm.getPassengers(),
-//                bookingForm.getReturnDateTime(),
-//                bookingForm.getUser()
-//        );
-//
-//        // Handle the case where the booking creation fails (if needed)
-//
-//        return "redirect:/bookings/list";
-//    }
-
     @Transactional
     @PostMapping("/delete/{id}")
     public String deleteBooking(@PathVariable Long id) {
@@ -184,76 +135,56 @@ public class BookingController {
 
 
 
-    @PostMapping("/bookCar")
-    public String bookCar(@RequestParam String tripType,
-                          @RequestParam String pickupLocation,
-                          @RequestParam String dropOffLocation,
-                          @RequestParam String pickupDateTime,
-                          @RequestParam int passengers,
-                          @RequestParam String returnDateTime,
-                          @RequestParam Long carId,
+    @PostMapping("/bookCar/{carId}")
+    public String bookCar(@PathVariable Long carId,
                           Model model,
-                          HttpServletRequest request) {
-        // Handle the booking logic here using the received car ID
-        // ...
-        // Parse pickupDateTime to LocalDateTime
-        LocalDateTime parsedPickupDateTime = LocalDateTime.parse(pickupDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                          HttpServletRequest request,
+                          HttpSession session) {
 
-        // Parse returnDateTime to LocalDateTime only if it's not null
-        LocalDateTime parsedReturnDateTime = null;
-        if (returnDateTime != null && !returnDateTime.isEmpty()) {
-            parsedReturnDateTime = LocalDateTime.parse(returnDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
+        BookingDto bookingDto = (BookingDto) session.getAttribute("savedBooking");
+
+        LocalDateTime pickupDateTime = (LocalDateTime) session.getAttribute("userPickupTime");
+        LocalDateTime returnDateTime = (LocalDateTime) session.getAttribute("userReturnTime");
+        String tripType = (String) session.getAttribute("userTripType");
+        int passengers = (int) session.getAttribute("passengers");
+
+        String pickupLocation = bookingDto.getPickupLocation();
+        String dropOffLocation = bookingDto.getDropOffLocation();
+
         User user = userSerivce.loadUserByUsername(request.getRemoteUser());
+
+        Car car = carService.findById(carId).orElseThrow(RuntimeException::new);
+        User driver = userSerivce.findByCar(car).orElseThrow(RuntimeException::new);
+
 //        Booking booking = new Booking(tripType, pickupLocation, dropOffLocation, pickupDateTime, passengers, returnDateTime, user);
-        bookingService.saveBooking(tripType, pickupLocation, dropOffLocation, parsedPickupDateTime, passengers, parsedReturnDateTime, user);
+        bookingService.saveBooking(tripType, pickupLocation, dropOffLocation, pickupDateTime, passengers, returnDateTime, user, driver);
 
         // Optionally, you can add attributes to the model to display messages or data on the page
         model.addAttribute("bookingMessage", "Booking successful");
 
         return "redirect:/booking/info"; // Redirect to the original page after booking
     }
+
     @GetMapping("/info")
     public String showBookingInfo(Model model, HttpServletRequest request) {
-        List<Booking> bookings = bookingService.getAllBookings();
-        List<BookingDto> bookingDtos = inMemoryBookingRepository.findAll();
+//        List<Booking> bookings = bookingService.getAllBookings();
+
         User user = userSerivce.loadUserByUsername(request.getRemoteUser());
         List<Booking> bookingsUser = bookingService.findBookingsByUser(user);
+        List<Booking> bookingsDriver = bookingService.findBookingsByDriver(user);
+
+        Boolean isDriver = user.getRole() == Role.ROLE_ADMIN;
 
         model.addAttribute("bookingsUser", bookingsUser);
 
         model.addAttribute("currentUser",request.getRemoteUser());
-        model.addAttribute("bookingsDto", bookingDtos);
-        model.addAttribute("bookings", bookings);
+
+//        model.addAttribute("bookings", bookings);
+        model.addAttribute("bookingsDriver",bookingsDriver);
         model.addAttribute("bodyContent","bookingInfo");
+        model.addAttribute("showButton", BookingStatus.REQUESTED);
+        model.addAttribute("isDriver",isDriver);
         return "master-template";
     }
 
-
-    /*@PostMapping
-    public String bookTaxi(@RequestParam String tripType,
-                           @RequestParam String pickupLocation,
-                           @RequestParam String dropOffLocation,
-                           @RequestParam LocalDateTime pickupDateTime,
-                           @RequestParam int passengers,
-                           @RequestParam(required = false) LocalDateTime returnDateTime,
-                           HttpSession session) {
-
-        // Assuming you have a User model and a UserService to get the current user
-        User currentUser = userSerivce.getCurrentUser(); // You need to implement this method
-
-        Booking booking = new Booking();
-        booking.setTripType(tripType);
-        booking.setPickupLocation(pickupLocation);
-        booking.setDropOffLocation(dropOffLocation);
-        booking.setPickupDateTime(pickupDateTime);
-        booking.setPassengers(passengers);
-        booking.setReturnDateTime(returnDateTime);
-        booking.setUser(currentUser); // Set the current user
-
-        bookingService.saveBooking(tripType,pickupLocation,dropOffLocation,pickupDateTime,passengers,returnDateTime,currentUser);
-
-        // Redirect to a success page or any other appropriate page
-        return "redirect:/success";
-    }*/
 }

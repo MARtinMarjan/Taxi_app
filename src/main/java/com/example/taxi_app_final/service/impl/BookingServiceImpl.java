@@ -2,11 +2,11 @@ package com.example.taxi_app_final.service.impl;
 
 import com.example.taxi_app_final.model.Booking;
 import com.example.taxi_app_final.model.BookingStatus;
-import com.example.taxi_app_final.model.Car;
 import com.example.taxi_app_final.model.User;
 import com.example.taxi_app_final.model.exceptions.InvalidBookingException;
 import com.example.taxi_app_final.repository.BookingRepository;
 import com.example.taxi_app_final.service.BookingService;
+import com.example.taxi_app_final.service.UserSerivce;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +34,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Optional<Booking> saveBooking(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime, User user) {
-        return Optional.of(this.bookingRepository.save(new Booking(tripType,pickupLocation,dropOffLocation,pickupDateTime,passengers,returnDateTime,user)));
+    public Optional<Booking> saveBooking(String tripType, String pickupLocation, String dropOffLocation, LocalDateTime pickupDateTime, int passengers, LocalDateTime returnDateTime, User user, User driver) {
+        return Optional.of(this.bookingRepository.save(new Booking(tripType,pickupLocation,dropOffLocation,pickupDateTime,passengers,returnDateTime,user,driver)));
     }
 
     @Transactional
@@ -47,6 +47,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> findBookingsByUser(User user) {
         return bookingRepository.findAllByUser(user);
+    }
+
+    @Override
+    public List<Booking> findBookingsByDriver(User driver) {
+        return bookingRepository.findAllByDriver(driver);
     }
 
     @Override
